@@ -81,7 +81,7 @@ class FlashErase(AModule):
         # Erase the target chip
         self.erase(spi_interface, reset, device)
 
-    def run(self):
+    def run(self, return_value=False):
         """
         Main function.
         Erase the flash memory of an AVR device.
@@ -94,10 +94,13 @@ class FlashErase(AModule):
             return
         try:
             self.process()
-            return True
+            if return_value:
+                return True
         except ValueError as err:
             self.logger.handle(err, self.logger.ERROR)
-            return False
+            if return_value:
+                return False
         except Exception as err:
             self.logger.handle("{}: {}".format(type(err).__name__, err), self.logger.ERROR)
-            return False
+            if return_value:
+                return False
