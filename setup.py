@@ -4,14 +4,14 @@
 
 from setuptools import setup, find_packages
 
-__authors__ = ""
-__copyright__ = ""
+__authors__ = "Jordan Ovrè, Paul Duncan"
+__copyright__ = "Copyright (c) ImmunIT - Jordan Ovrè / Paul Duncan"
 __license__ = "Apache 2.0"
 __version__ = "1.0.0"
-__contact__ = ""
+__contact__ = "Jordan Ovrè / Ghecko <jovre@immunit.ch>, Paul Duncan / Eresse <pduncan@immunit.ch>"
 
-description = ''
-name = 'owfmodules.<category>.<module_name>'
+description = 'Erase the AVR flash memory'
+name = 'owfmodules.avrisp.flash_erase'
 
 setup(
     name=name,
@@ -21,11 +21,11 @@ setup(
     description=description,
     author=__authors__,
     zip_safe=True,
-    url='https://bitbucket.org/octowire/' + name,
+    url='https://github.com/immunIT/' + name,
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python :: 3',
         'Development Status :: 5 - Production/Stable'
     ],
-    keywords=['octowire', 'framework', 'hardware', 'security']
+    keywords=['octowire', 'framework', 'hardware', 'security', 'AVR', 'flash', 'erase']
 )

@@ -1,4 +1,4 @@
-# owfmodules.skeleton
-Module base repository
+# owfmodules.avrisp.flash_erase
 
-Please read [CONTRIBUTING.md](https://github.com/immunIT/octowire-framework/blob/master/CONTRIBUTING.md) to follow the contribution process.
+This module allows erasing the flash memory of an AVR MCU which supports programming through the ISP protocol.
+It use the SPI interface with a GPIO port used as the reset line.
