@@ -1,3 +1,11 @@
+# -*- coding: utf-8 -*-
+
+# Octowire Framework
+# Copyright (c) ImmunIT - Jordan Ovrè / Paul Duncan
+# License: Apache 2.0
+# Paul Duncan / Eresse <pduncan@immunit.ch>
+# Jordan Ovrè / Ghecko <jovre@immunit.ch>
+
 import time
 
 from octowire_framework.module.AModule import AModule
@@ -10,18 +18,18 @@ class FlashErase(AModule):
     def __init__(self, owf_config):
         super(FlashErase, self).__init__(owf_config)
         self.meta.update({
-            'name': 'AVR write flash memory',
+            'name': 'AVR flash memory erase',
             'version': '1.0.0',
-            'description': 'Module to write the flash memory of an AVR device using the ISP protocol.',
+            'description': 'Erase the flash memory of AVR microcontrollers',
             'author': 'Jordan Ovrè / Ghecko <jovre@immunit.ch>, Paul Duncan / Eresse <pduncan@immunit.ch>'
         })
         self.options = {
             "spi_bus": {"Value": "", "Required": True, "Type": "int",
-                        "Description": "The octowire SPI bus (0=SPI0 or 1=SPI1)", "Default": 0},
+                        "Description": "SPI bus (0=SPI0 or 1=SPI1)", "Default": 0},
             "reset_line": {"Value": "", "Required": True, "Type": "int",
-                           "Description": "The octowire GPIO used as the Reset line", "Default": 0},
+                           "Description": "GPIO used as the Reset line", "Default": 0},
             "spi_baudrate": {"Value": "", "Required": True, "Type": "int",
-                             "Description": "set SPI baudrate (1000000 = 1MHz) maximum = 50MHz", "Default": 1000000},
+                             "Description": "SPI frequency (1000000 = 1MHz) maximum = 50MHz", "Default": 1000000},
         }
         self.dependencies.append("owfmodules.avrisp.device_id>=1.0.0")
 
@@ -41,10 +49,8 @@ class FlashErase(AModule):
 
         # Drive reset low
         reset.status = 0
+        self.logger.handle("Enabling Memory Access...", self.logger.INFO)
 
-        self.logger.handle("Enable Memory Access...", self.logger.INFO)
-        # Drive reset low
-        reset.status = 0
         # Enable Memory Access
         spi_interface.transmit(enable_mem_access_cmd)
         time.sleep(0.5)
@@ -75,7 +81,7 @@ class FlashErase(AModule):
         # Configure GPIO as output
         reset.direction = GPIO.OUTPUT
 
-        # Active Reset is low
+        # Reset is active-low
         reset.status = 1
 
         # Erase the target chip
@@ -87,8 +93,8 @@ class FlashErase(AModule):
         Erase the flash memory of an AVR device.
         :return: Nothing.
         """
-        # If detect_octowire is True then Detect and connect to the Octowire hardware. Else, connect to the Octowire
-        # using the parameters that were configured. It sets the self.owf_serial variable if the hardware is found.
+        # If detect_octowire is True then detect and connect to the Octowire hardware. Else, connect to the Octowire
+        # using the parameters that were configured. This sets the self.owf_serial variable if the hardware is found.
         self.connect()
         if not self.owf_serial:
             return
